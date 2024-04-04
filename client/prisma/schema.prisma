@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// Define the Employee model
+model Employee {
+  id                Int        @id @default(autoincrement())
+  name              String
+  department        String
+  designation       String
+  joiningDate       DateTime
+  salary            Int
+  bankAccountNumber String
+  contactNumber     String
+  email             String
+  address           String
+  salarySlips       SalarySlip[]
+}
+
+
+// Define the SalarySlip model
+model SalarySlip {
+  id            Int      @id @default(autoincrement())
+  employee      Employee @relation(fields: [employeeId], references: [id])
+  employeeId    Int
+  month         Int
+  year          Int
+  basicSalary   Int
+  allowances    Int
+  deductions    Int
+  grossSalary   Int
+  netSalary     Int
+  generatedDate DatesTime
+}
+
+model deductions{
+
+}
+
+model entitlement{
+
+}
